@@ -1,7 +1,7 @@
 const tictactoe = function() {
   let winner = false;
 
-  let board = [[null,null,null], [null,null,null], [null,null,null]];
+  let board = [[' ',' ',' '], [' ',' ',' '], [' ',' ',' ']];
 
   const checkH = function(row) {
     if ((row[0] === row[1]) && (row[0] === row[2]) && row[0]) {
@@ -16,21 +16,22 @@ const tictactoe = function() {
   }
 
   const checkD = function() {
-    if ((row[0][0]] === row[1][1]) && (row[0][0] === row[2][2]) && row[0][0]) {
+    if ((row[0][0] === row[1][1]) && (row[0][0] === row[2][2]) && row[0][0]) {
       winner = true;
     }
-    if ((row[0][2]] === row[1][1]) && (row[0][0] === row[2][0]) && row[0][2]) {
+    if ((row[0][2] === row[1][1]) && (row[0][0] === row[2][0]) && row[0][2]) {
       winner = true;
     }
   }
 
-  const drawboard = function() {
+  const drawBoard = function() {
     console.log('   0   1   2');
     for (let i=0; i<3; i++) {
       console.log(i+'  '+board[i][0]+' | '+board[i][1]+' | '+board[i][2]);
       if (i<2) {
-        console.log('. --- --- ---')
+        console.log('. --- --- ---');
       }
+    }
   }
 
 
@@ -38,25 +39,26 @@ const tictactoe = function() {
     console.log('Shall we play a game?\n\n');
     let plays = 0;
     let row, col;
-    let player = 'X'
+    let player = 'X';
+    drawBoard();
 
-    const makeMove = function {
+    const makeMove = function() {
       console.log('Your move, player '+player+'. Please enter a row number:');
       process.stdin.resume();
       process.stdin.setEncoding('utf8');
-      process.stdin.on('data', function (data) {
+      process.stdin.once('data', function (data) {
         row = data;
         process.stdin.pause();
       });
       console.log('And a column:')
       process.stdin.resume();
       process.stdin.setEncoding('utf8');
-      process.stdin.on('data', function (data) {
+      process.stdin.once('data', function (data) {
         col = data;
         process.stdin.pause();
       });
       plays++;
-      if (board[row][col]) {
+      if (board[row][col] !== ' ') {
         console.log('Sorry, that space is taken.  Try again.');
         makeMove();
       } else {
@@ -73,16 +75,18 @@ const tictactoe = function() {
             console.log('Stalemate! The only winning move is not to play');
             playGame();
           }
-          let player = player === 'X' ? 'O' : 'X';
+          player = player === 'X' ? 'O' : 'X';
           makeMove();
         }
       }
-    }
+    };
 
-  }
+    makeMove();
+
+  };
 
   playGame();
 
 };
 
-tictactoe();
+tictactoe()
