@@ -21,7 +21,7 @@ const tictactoe = function() {
     if ((board[0][0] === board[1][1]) && (board[0][0] === board[2][2]) && board[1][1] !== ' ') {
       winner = true;
     }
-    if ((board[0][2] === board[1][1]) && (board[0][0] === board[2][0]) && board[1][1] !== ' ') {
+    if ((board[0][2] === board[1][1]) && (board[0][2] === board[2][0]) && board[1][1] !== ' ') {
       winner = true;
     }
   }
@@ -31,7 +31,7 @@ const tictactoe = function() {
     for (let i=0; i<3; i++) {
       console.log(i+'  '+board[i][0]+' | '+board[i][1]+' | '+board[i][2]);
       if (i<2) {
-        console.log(' --- --- ---');
+        console.log('  --- --- ---');
       }
     }
   }
@@ -46,30 +46,16 @@ const tictactoe = function() {
 
     const makeMove = function() {
       console.log('Your move, player '+player+'. Please enter a row and a column.');
-      // process.stdin.resume();
-      // process.stdin.setEncoding('utf8');
-      // process.stdin.once('data', function (data) {
-      //   row = data;
-      //   process.stdin.pause();
-      // });
-
-      // console.log('And a column:')
-      // process.stdin.resume();
-      // process.stdin.setEncoding('utf8');
-      // process.stdin.once('data', function (data) {
-      //   col = data;
-      //   process.stdin.pause();
-      // });
       prompt.start();
       prompt.get([{name: 'row', required: true},{name: 'column', required: true}], function(err, result) {
         row = result.row;
         col = result.column;
-        plays++;
         if (board[row][col] !== ' ') {
           console.log('Sorry, that space is taken.  Try again.');
           makeMove();
         } else {
           board[row][col] = player;
+          plays++;
           drawBoard();
           checkH(row);
           checkV(col);
